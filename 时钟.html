@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+		}
+		#clock{
+			width: 200px;
+			height: 200px;
+			border:1px solid #000;
+			border-radius: 50%;
+			margin: 100px auto;
+			position: relative;
+		}
+		#dial{
+			position: relative;/*为什么在这定位*/
+		}
+		#dial li{
+			width: 2px;
+			height :4px;
+			background: #000;
+			position: absolute;
+			left: 99px;
+			-webkit-transform-origin:center 100px;
+		}
+		#dial li:nth-child(5n+1){/*不能有空格li和冒号间*/
+			height:8px;
+		}
+		#hour{
+			height: 35px;
+			width: 10px;
+			background: #000;
+			position: absolute;
+			left: 95px;
+			top: 65px;
+			-webkit-transform-origin:center bottom;
+		}
+		#minute{
+			height: 45px;
+			width: 8px;
+			background: #ccc;
+			position: absolute;
+			left: 96px;
+			top: 55px;
+			-webkit-transform-origin:center bottom;
+
+		}
+		#second{
+			height: 65px;
+			width: 6px;
+			background: #f00;
+			position: absolute;
+			left: 98px;
+			top: 35px;
+			-webkit-transform-origin:center bottom;
+
+		}
+	</style>
+<body>
+	<div id="clock">
+		<ul id="dial">
+		</ul>
+		<div id="hour"></div>
+		<div id="minute"></div>
+		<div id="second"></div>
+	</div>
+	<script type="text/javascript">
+		(function(){
+			var oDial = document.getElementById('dial')
+			var oHour =document.getElementById('hour'),
+				oMinute=document.getElementById('minute'),
+				OSecond = document.getElementById('second');
+			var html = "";
+			for(var i=0;i<60;i++){
+				html += 
+				'<li style="-webkit-transform:rotate('+6*i+'deg)"></li>';//有问题
+			}
+			oDial.innerHTML =html;
+			function run(){
+				var now = new Date();
+			var iSecond = now.getSeconds(),
+				iMinute = now.getMinutes()+iSecond/60,
+				iHour = now.getHours()+iMinute/60;
+			oHour.style.webkitTransform = 'rotate('+iHour*30+'deg)';
+			oMinute.style.webkitTransform = 'rotate('+iMinute*6+'deg)';
+			OSecond.style.webkitTransform = 'rotate('+iSecond*6+'deg)';
+
+			}
+		run();
+		setInterval(function(){
+			run();
+		},1000);
+			
+		})()
+	</script>
+
+</body>
+</html>
